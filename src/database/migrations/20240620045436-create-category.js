@@ -16,6 +16,7 @@ module.exports = {
       id_category: {
         type: Sequelize.STRING,
         allowNull: false,
+        defaultValue: Sequelize.fn("NOW"),
         unique: true
       },
       createdAt: {
