@@ -11,13 +11,9 @@ module.exports = {
       },
       category_name: {
         type: Sequelize.STRING,
-        allowNull: false
       },
       id_category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: Sequelize.fn("NOW"),
-        unique: true
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

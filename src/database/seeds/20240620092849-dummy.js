@@ -7,22 +7,20 @@ module.exports = {
       // Seed Users
       const usersResult = await queryInterface.bulkInsert('Users', [
         {
+          id: 90,
           name: 'John Doe',
           email: 'john.doe@example.com',
           password: 'password123',
           biography: 'Some bio',
           title: 'Photographer',
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
         {
+          id: 91,
           name: 'Jane Doe',
           email: 'jane.doe@example.com',
           password: 'password123',
           biography: 'Some bio',
           title: 'Photographer',
-          createdAt: new Date(),
-          updatedAt: new Date()
         }
       ], { returning: true });
 
@@ -36,16 +34,21 @@ module.exports = {
       // Seed Categories
       const categoriesResult = await queryInterface.bulkInsert('Categories', [
         {
+          
           category_name: 'Nature',
           id_category: 'CAT001',
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
         {
           category_name: 'Technology',
           id_category: 'CAT002',
-          createdAt: new Date(),
-          updatedAt: new Date()
+        },
+        {
+          category_name: 'Art',
+          id_category: 'CAT003',
+        },
+        {
+          category_name: 'Science',
+          id_category: 'CAT004',
         }
       ], { returning: true });
 
@@ -59,55 +62,53 @@ module.exports = {
       // Seed Photos
       const photos = await queryInterface.bulkInsert('Photos', [
         {
-          id_user: userIds[0],
+          userId: 90,
           categoryId: categoryIds[0],
-          photo_url: 'http://example.com/photo1.jpg',
-          createdAt: new Date(),
-          updatedAt: new Date()
+          description: 'Beautiful nature scene',
+          link_image: 'http://example.com/photo1.jpg',
         },
         {
-          id_user: userIds[1],
+          userId: 91,
           categoryId: categoryIds[1],
-          photo_url: 'http://example.com/photo2.jpg',
-          createdAt: new Date(),
-          updatedAt: new Date()
+          description: 'Amazing technology gadget',
+          link_image: 'http://example.com/photo2.jpg',
         }
       ], { returning: true });
+
+      if (!Array.isArray(photos) || photos.length === 0) {
+        throw new Error('Failed to insert photos or unexpected result format.');
+      }
+
+      // Extract inserted photo IDs
+      const photoIds = photos.map(photo => photo.id);
 
       // Seed Comments
       await queryInterface.bulkInsert('Comments', [
         {
-          id_photo: photos[0].id,
+          id_photo: photoIds[0],
           id_user: userIds[1],
           comment: 'Beautiful photo!',
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
         {
-          id_photo: photos[1].id,
+          id_photo: photoIds[1],
           id_user: userIds[0],
           comment: 'Amazing technology!',
-          createdAt: new Date(),
-          updatedAt: new Date()
         }
       ], {});
 
       // Seed Likes
       await queryInterface.bulkInsert('Likes', [
         {
-          id_photo: photos[0].id,
+          id_photo: photoIds[0],
           id_user: userIds[1],
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
         {
-          id_photo: photos[1].id,
+          id_photo: photoIds[1],
           id_user: userIds[0],
-          createdAt: new Date(),
-          updatedAt: new Date()
         }
       ], {});
 
+      console.log('Data has been seeded successfully.');
     } catch (error) {
       console.error('Error seeding data:', error);
       throw error;
@@ -115,11 +116,18 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    // Reverse the seeding process
-    await queryInterface.bulkDelete('Likes', null, {});
-    await queryInterface.bulkDelete('Comments', null, {});
-    await queryInterface.bulkDelete('Photos', null, {});
-    await queryInterface.bulkDelete('Categories', null, {});
-    await queryInterface.bulkDelete('Users', null, {});
+    try {
+      // Reverse the seeding process
+      await queryInterface.bulkDelete('Likes', null, {});
+      await queryInterface.bulkDelete('Comments', null, {});
+      await queryInterface.bulkDelete('Photos', null, {});
+      await queryInterface.bulkDelete('Categories', null, {});
+      await queryInterface.bulkDelete('Users', null, {});
+
+      console.log('Data has been deleted successfully.');
+    } catch (error) {
+      console.error('Error deleting data:', error);
+      throw error;
+    }
   }
 };
