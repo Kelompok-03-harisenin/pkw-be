@@ -13,12 +13,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      id_category: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        defaultValue: Sequelize.fn("NOW"),
-        unique: true
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

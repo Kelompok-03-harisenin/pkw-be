@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'user'
       });
       Photo.belongsTo(models.Category, {
-        foreignKey: 'categoryId',
+        foreignKey: 'id_category',
         as: 'category'
       });
       Photo.hasMany(models.Comment, {
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false
       },
-      categoryId: {
+      id_category: {
         type: DataTypes.INTEGER,
         allowNull: true
       },

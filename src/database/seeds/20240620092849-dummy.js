@@ -2,119 +2,83 @@
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  up: async (queryInterface, Sequelize) => {
-    try {
+  async up (queryInterface, Sequelize) {
+
       // Seed Users
-      const usersResult = await queryInterface.bulkInsert('Users', [
+      await queryInterface.bulkInsert('Users', [
         {
           name: 'John Doe',
           email: 'john.doe@example.com',
-          password: 'password123',
+          password: '$2a$10$ho2yzTqkih6VidCu8qJfLuenkef2acA20Hb6PimKOiuZlnlVdKJrm', // password123 (bcrypt 10 rounds)
           biography: 'Some bio',
-          title: 'Photographer',
-          createdAt: new Date(),
-          updatedAt: new Date()
+          title: 'Photographer'
         },
         {
           name: 'Jane Doe',
           email: 'jane.doe@example.com',
-          password: 'password123',
+          password: '$2a$10$6tDQIhKYYcQQtPvQAdtqMOS7m3tvGj3tJ5.bPErX4iMDacwseYBAS', // password123 (bcrypt 10 rounds)
           biography: 'Some bio',
-          title: 'Photographer',
-          createdAt: new Date(),
-          updatedAt: new Date()
+          title: 'Photographer'
         }
-      ], { returning: true });
-
-      if (!Array.isArray(usersResult) || usersResult.length === 0) {
-        throw new Error('Failed to insert users or unexpected result format.');
-      }
-
-      // Extract inserted user IDs
-      const userIds = usersResult.map(user => user.id);
+      ])
 
       // Seed Categories
-      const categoriesResult = await queryInterface.bulkInsert('Categories', [
+      await queryInterface.bulkInsert('Categories', [
         {
           category_name: 'Nature',
-          id_category: 'CAT001',
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
         {
           category_name: 'Technology',
-          id_category: 'CAT002',
-          createdAt: new Date(),
-          updatedAt: new Date()
         }
-      ], { returning: true });
-
-      if (!Array.isArray(categoriesResult) || categoriesResult.length === 0) {
-        throw new Error('Failed to insert categories or unexpected result format.');
-      }
-
-      // Extract inserted category IDs
-      const categoryIds = categoriesResult.map(category => category.id);
+      ])
 
       // Seed Photos
-      const photos = await queryInterface.bulkInsert('Photos', [
+      await queryInterface.bulkInsert('Photos', [
         {
-          id_user: userIds[0],
-          categoryId: categoryIds[0],
+          id_user: 1,
+          id_category: 1,
           photo_url: 'http://example.com/photo1.jpg',
-          createdAt: new Date(),
-          updatedAt: new Date()
         },
         {
-          id_user: userIds[1],
-          categoryId: categoryIds[1],
+          id_user: 1,
+          id_category: 2,
           photo_url: 'http://example.com/photo2.jpg',
-          createdAt: new Date(),
-          updatedAt: new Date()
+        },
+        {
+          id_user: 2,
+          id_category: 1,
+          photo_url: 'http://example.com/photo3.jpg',
         }
-      ], { returning: true });
+      ]);
 
       // Seed Comments
       await queryInterface.bulkInsert('Comments', [
         {
-          id_photo: photos[0].id,
-          id_user: userIds[1],
-          comment: 'Beautiful photo!',
-          createdAt: new Date(),
-          updatedAt: new Date()
+          id_photo: 1,
+          id_user: 1,
+          comment: 'Beautiful photo!'
         },
         {
-          id_photo: photos[1].id,
-          id_user: userIds[0],
-          comment: 'Amazing technology!',
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
-      ], {});
+          id_photo: 2,
+          id_user: 2,
+          comment: 'Amazing technology!'        }
+      ]);
 
       // Seed Likes
       await queryInterface.bulkInsert('Likes', [
         {
-          id_photo: photos[0].id,
-          id_user: userIds[1],
-          createdAt: new Date(),
-          updatedAt: new Date()
+          id_photo: 1,
+          id_user: 1
         },
         {
-          id_photo: photos[1].id,
-          id_user: userIds[0],
-          createdAt: new Date(),
-          updatedAt: new Date()
+          id_photo: 2,
+          id_user: 1,
         }
-      ], {});
+      ]);
 
-    } catch (error) {
-      console.error('Error seeding data:', error);
-      throw error;
-    }
   },
 
-  down: async (queryInterface, Sequelize) => {
+  async down (queryInterface, Sequelize) {
     // Reverse the seeding process
     await queryInterface.bulkDelete('Likes', null, {});
     await queryInterface.bulkDelete('Comments', null, {});
