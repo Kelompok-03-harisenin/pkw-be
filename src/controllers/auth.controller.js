@@ -6,6 +6,12 @@ const { User:UserModel } = require('../models')
 const register = async (req, res, next) => {
     const {name, email, password} =  req.body;
 
+    const userFind = await UserModel.findOne({ where: {email}})
+
+    if (userFind) {
+        return res.status(401).send({message: "Email already exists"})
+    }
+
     const passwordhashed = await bcrypt.hash(password, 10);
 
     const user = await UserModel.create({
