@@ -6,6 +6,12 @@ const { User:UserModel } = require('../models')
 const register = async (req, res, next) => {
     const {name, email, password} =  req.body;
 
+    const userFind = await UserModel.findOne({ where: {email}})
+
+    if (userFind) {
+        return res.status(401).send({message: "Email already exists"})
+    }
+
     const passwordhashed = await bcrypt.hash(password, 10);
 
     const user = await UserModel.create({
@@ -13,6 +19,7 @@ const register = async (req, res, next) => {
         email,
         password: passwordhashed,
         biography: "",
+        title: ""
         
     })
     if (!user) {
@@ -22,8 +29,7 @@ const register = async (req, res, next) => {
     return res.status(200).send({
         message: "Register successful",
         data: {
-            name: user.name,
-            email: user.email
+            name: user.name
         }
     })
 }
@@ -43,8 +49,7 @@ const login = async (req, res, next) => {
     }
 
     const data = {
-        id: user.userid,
-        email: user.email,
+        id: user.id,
         name: user.name
     }
 
