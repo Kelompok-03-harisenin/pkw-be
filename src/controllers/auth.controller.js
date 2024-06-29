@@ -43,7 +43,6 @@ const login = async (req, res, next) => {
 
     const data = {
         id: user.id,
-        email: user.email,
         name: user.name
     }
 
