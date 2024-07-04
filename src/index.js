@@ -12,6 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 app.use("/api/auth", authRouter)
+app.use("/api/categories", categoryRouter);//more category
 
 
 app.listen(process.env.SERVER_PORT || 3000, () => {
