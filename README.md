@@ -7,8 +7,15 @@ npx sequelize-cli model:generate --name users --attributes
 name:string,email:string,password:string --underscored --force
 ```
 
+### JWT SECRET KEY
+```bash
+openssl rand -hex 32
+```
+
 ### Command to start server
 ```bash
+# first make a .env file using .env.example as an example
+# then do this command
 npm run dev
 ```
 
