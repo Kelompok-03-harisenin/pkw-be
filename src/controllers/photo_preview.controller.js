@@ -44,7 +44,10 @@ const photoPreview = async (req, res, next) => {
             }
         ]
     })
-    return res.send(photoFind)
+    return res.status(200).send({
+        message: "Photo found",
+        data: photoFind
+    })
 }
 
 module.exports = { photoPreview }
