@@ -6,6 +6,10 @@ const { User:UserModel } = require('../models')
 const register = async (req, res, next) => {
     const {name, email, password} =  req.body;
 
+    if (!email || !name || !password) {
+        return res.status(401).send({message: "ERROR body is empty/isnt filled properly"})
+    }
+
     const userFind = await UserModel.findOne({ where: {email}})
 
     if (userFind) {
@@ -36,6 +40,10 @@ const register = async (req, res, next) => {
 
 const login = async (req, res, next) => {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+        return res.status(401).send({message: "ERROR body is empty/isnt filled properly"})
+    }
 
     const user = await UserModel.findOne({ where: {email}})
 
