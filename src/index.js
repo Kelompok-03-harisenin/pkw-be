@@ -1,4 +1,5 @@
 const path = require("path");
+const photoRouter = require("./routes/photo_routes");
 
 require("dotenv").config({ path: path.join(__dirname, "../.env") });
 
