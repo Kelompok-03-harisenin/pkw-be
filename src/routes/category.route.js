@@ -1,9 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const { index, show, search } = require('../controllers/category.controller');
+const { index, show } = require('../controllers/category.controller');
+const { search } = require('../controllers/categorySearch.controller');
 
+// Get all categories
 router.get('/', index);
+
+// Get category by ID
 router.get('/:id', show);
-router.get('/search', search); // pencarian kategori
+
+// Search categories by name
+router.get('/search/:category_name', search);
 
 module.exports = router;
