@@ -6,7 +6,7 @@ const router = express.Router()
 const {photoPreview} = require("../controllers/photo_preview.controller")
 
 router.get("/preview/:photoID", photoPreview);
-router.post('/photo/:photoId', verifyToken, editPhoto);
-router.delete('/photo/:photoId', verifyToken, deletePhoto);
+router.post('/:photoId', verifyToken, editPhoto);
+router.delete('/:photoId', verifyToken, deletePhoto);
 
 module.exports = router;
