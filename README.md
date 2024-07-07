@@ -1,3 +1,9 @@
+# CAPTURE CLOUD BACKEND
+
+## API
+
+![API image](./api.png)
+
 
 ## TO START DEVELOPING
 
