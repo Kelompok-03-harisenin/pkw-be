@@ -32,7 +32,7 @@ const editPhoto = async (req, res, next) => {
       where: { id: photoId }
     });
   
-    return res.send({
+    return res.status(200).send({
       message: "Photo updated successfully",
       data: {
         id: updatedPhoto.id,
@@ -60,7 +60,7 @@ const editPhoto = async (req, res, next) => {
       where: { id: photoId }
     });
   
-    return res.send({ message: "Photo deleted successfully" });
+    return res.status(200).send({ message: "Photo deleted successfully" });
   };
   
   

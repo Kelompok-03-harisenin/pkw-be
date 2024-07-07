@@ -39,7 +39,7 @@ const search = async (req, res, _next) => {
       })),
     }));
 
-    return res.send({
+    return res.status(200).send({
       message: "Success",
       data: formattedCategories,
     });

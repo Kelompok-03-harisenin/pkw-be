@@ -30,7 +30,7 @@ const register = async (req, res, next) => {
         return res.status(401).send({message: "Registration failed"})
     }
 
-    return res.status(200).send({
+    return res.status(201).send({
         message: "Register successful",
         data: {
             name: user.name

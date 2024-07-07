@@ -9,7 +9,13 @@ const { Op } = Sequelize; // Import Op dari Sequelize
 const index = async (_req, res, _next) => {
   const categories = await Category.findAll();
 
-  return res.send({
+  if (!categories) {
+    return res.status(404).send({
+      message: "Error, categories not found"
+    })
+  }
+
+  return res.status(200).send({
     message: "Success",
     data: categories.map((category) => ({
       id: category.id,
@@ -36,7 +42,7 @@ const show = async (req, res, _next) => {
     });
   }
 
-  return res.send({
+  return res.status(200).send({
     message: "Success",
     data: {
       id: category.id,

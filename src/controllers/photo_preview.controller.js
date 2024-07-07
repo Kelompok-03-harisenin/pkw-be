@@ -44,6 +44,13 @@ const photoPreview = async (req, res, next) => {
             }
         ]
     })
+
+    if (!photoFind) {
+        return res.status(404).send({
+            message: "Error Photo not found"
+        })
+    }
+
     return res.status(200).send({
         message: "Photo found",
         data: photoFind
