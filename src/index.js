@@ -10,6 +10,7 @@ const authRouter = require("./routes/auth.route");
 const categoryRouter = require("./routes/category.route");
 const photoRouter = require("./routes/photo.route");
 const commentRouter = require("./routes/comment.route");
+const userRouter = require("./routes/user.route");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/photo", photoRouter);
 app.use("/api/comments", commentRouter);
+app.use("/api/users", userRouter);
 
 
 app.listen(process.env.SERVER_PORT || 3000, () => {
