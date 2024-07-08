@@ -23,7 +23,8 @@ const register = async (req, res, next) => {
         email,
         password: passwordhashed,
         biography: "",
-        title: ""
+        title: "",
+        profile_picture: ""
         
     })
     if (!user) {
