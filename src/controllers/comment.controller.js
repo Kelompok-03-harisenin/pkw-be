@@ -105,12 +105,12 @@ const removeCommentByID = async (req, res, _next) => {
     attributes: ["id", "id_photo", "id_user", "comment"]
   })
 
-  if (req.user.id != existingComment.id_user) {
-    return res.status(401).send({ message: "Unauthorized" })
-  }
-
   if (!existingComment) {
     return res.status(404).send({ message: "Comment not found" });
+  }
+
+  if (req.user.id != existingComment.id_user) {
+    return res.status(401).send({ message: "Unauthorized" })
   }
 
   const deletedComment = await commentModel.destroy({
@@ -127,5 +127,57 @@ const removeCommentByID = async (req, res, _next) => {
   })
 }
 
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ */
+const editCommentByID = async (req, res, next) => {
+  const { commentID } = req.params
+  const { comment } = req.body
 
-module.exports = { getCommentsByPhoto, addCommentsToPhoto, removeCommentByID }
+  if (!commentID) {
+    return res.status(401).send({ message: "ERROR param is not filled properly" })
+  }
+
+  const commentIDnum = Number(commentID)
+
+  const existingComment = await commentModel.findOne({
+    where: { id: commentIDnum },
+    attributes: ["id", "id_photo", "id_user", "comment"]
+  })
+
+  if (!existingComment) {
+    return res.status(404).send({ message: "Comment not found" });
+  }
+
+  if (req.user.id != existingComment.id_user) {
+    return res.status(401).send({ message: "Unauthorized" })
+  }
+
+  const updateComment = await commentModel.update(
+    {
+      comment: comment || existingComment.comment
+    },
+    {
+      where: { id: commentIDnum }
+    }
+  )
+
+  if (!updateComment) {
+    return res.status(500).send({ message: "Error updating comment " })
+  }
+
+  const updatedComment = await commentModel.findOne({
+    where: { id: commentIDnum },
+    attributes: ["id", "id_photo", "id_user", "comment"]
+  })
+
+  return res.status(200).send({
+    message: "Comment updated",
+    data: updatedComment
+  })
+}
+
+
+module.exports = { getCommentsByPhoto, addCommentsToPhoto, removeCommentByID, editCommentByID }
