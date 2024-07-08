@@ -1,11 +1,11 @@
-const { Photo: PhotoModel, Comment: commentModel, Like: likeModel, User: userModel } = require("../models")
+const { Photo: PhotoModel, Comment: commentModel, User: userModel } = require("../models")
 
 /**
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
-const photoGetComments = async (req, res, next) => {
+const getCommentsByPhoto = async (req, res, next) => {
   const photoID = req.params.photoID
   const photoIDNum = Number(photoID)
 
@@ -43,7 +43,7 @@ const photoGetComments = async (req, res, next) => {
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
-const photoAddComments = async (req, res, next) => {
+const addCommentsToPhoto = async (req, res, next) => {
   const { comment } = req.body
 
   if (!comment) {
@@ -91,36 +91,41 @@ const photoAddComments = async (req, res, next) => {
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
-const photoGetLikes = async (req, res, next) => {
-  const photoID = req.params.photoID
-  const photoIDNum = Number(photoID)
+const removeCommentByID = async (req, res, _next) => {
+  const { commentID } = req.params
 
-  const photoFind = await PhotoModel.findOne({
-    where: { id: photoIDNum },
-  })
-
-  if (!photoFind) {
-    return res.status(404).send({
-      message: "Error Photo not found"
-    })
+  if (!commentID) {
+    return res.status(401).send({ message: "ERROR param is not filled properly" })
   }
 
-  const likeFind = await likeModel.findAll({
-    where: { id_photo: photoIDNum },
-    attributes: ["id", "id_user"],
-    include: [
-      {
-        model: userModel,
-        attributes: ["id", "name"],
-        as: "user"
-      }
-    ]
+  const commentIDnum = Number(commentID)
+
+  const existingComment = await commentModel.findOne({
+    where: { id: commentIDnum },
+    attributes: ["id", "id_photo", "id_user", "comment"]
   })
 
+  if (req.user.id != existingComment.id_user) {
+    return res.status(401).send({ message: "Unauthorized" })
+  }
+
+  if (!existingComment) {
+    return res.status(404).send({ message: "Comment not found" });
+  }
+
+  const deletedComment = await commentModel.destroy({
+    where: { id: commentIDnum }
+  })
+
+  if (!deletedComment) {
+    return res.status(500).send({ message: "Error unable to delete comment" })
+  }
+
   return res.status(200).send({
-    message: "Photo found",
-    data: likeFind
+    message: "Comment removed",
+    data: existingComment
   })
 }
 
-module.exports = { photoGetComments, photoGetLikes, photoAddComments }
+
+module.exports = { getCommentsByPhoto, addCommentsToPhoto, removeCommentByID }
