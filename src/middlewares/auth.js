@@ -30,9 +30,10 @@ const verifyToken = async (req, res, next) => {
 
     next();
   } catch (err) {
+    console.log(err.name);
     if (err.name === "JsonWebTokenError" || err.name === "TokenExpiredError") {
       return res.status(401).send({
-        message: "Unauthorized",
+        message: "Unauthorized, you are not allowed to access this feature",
         data: null,
       });
     }

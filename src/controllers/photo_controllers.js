@@ -1,6 +1,32 @@
 const {
   Photo: PhotoModel,
 } = require("../models");
+const photo = require("../models/photo");
+const { addPhotoService } = require("../services/photoService");
+
+const uploadPhoto = async (req, res, next) => {
+  try {
+    const userId = req.user.id;
+
+    if (!req.file) {
+      throw { statusCode: 400, message: "Tidak ada foto yang di upload" };
+    }
+
+    const { id_category, title, description } = req.body;
+
+    if (!title) {
+      throw { statusCode: 400, message: "Nama foto tidak boleh kosong" };
+    }
+
+    const result = await addPhotoService(userId, id_category, req.file.path, title, description);
+    res
+      .status(201)
+      .send({ message: "Berhasil menambahkan foto", photo: result });
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+};
 
 const editPhoto = async (req, res, next) => {
     const { photoId } = req.params;
@@ -64,4 +90,4 @@ const editPhoto = async (req, res, next) => {
   };
   
   
-  module.exports = {editPhoto, deletePhoto};
+  module.exports = {uploadPhoto, editPhoto, deletePhoto};
