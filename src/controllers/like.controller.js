@@ -1,9 +1,11 @@
+const { Photo: PhotoModel, Like: likeModel, User: userModel } = require("../models")
+
 /**
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
-const photoGetLikes = async (req, res, next) => {
+const getLikesByID = async (req, res, next) => {
   const photoID = req.params.photoID
   const photoIDNum = Number(photoID)
 
@@ -35,4 +37,4 @@ const photoGetLikes = async (req, res, next) => {
   })
 }
 
-module.exports = { photoGetLikes }
+module.exports = { getLikesByID }

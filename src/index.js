@@ -11,6 +11,7 @@ const categoryRouter = require("./routes/category.route");
 const photoRouter = require("./routes/photo.route");
 const commentRouter = require("./routes/comment.route");
 const userRouter = require("./routes/user.route");
+const likeRouter = require("./routes/like.route")
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use("/api/auth", authRouter);
 app.use("/api/categories", categoryRouter);
 app.use("/api/photo", photoRouter);
 app.use("/api/comments", commentRouter);
+app.use("/api/likes", likeRouter);
 app.use("/api/users", userRouter);
 
 
