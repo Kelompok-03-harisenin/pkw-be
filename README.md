@@ -22,6 +22,7 @@ openssl rand -hex 32
 ```bash
 # first make a .env file using .env.example as an example
 # then do this command
+npm install
 npm run dev
 ```
 
