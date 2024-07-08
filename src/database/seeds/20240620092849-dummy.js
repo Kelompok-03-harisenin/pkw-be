@@ -11,14 +11,16 @@ module.exports = {
           email: 'john.doe@example.com',
           password: '$2a$10$ho2yzTqkih6VidCu8qJfLuenkef2acA20Hb6PimKOiuZlnlVdKJrm', // password123 (bcrypt 10 rounds)
           biography: 'Some bio',
-          title: 'Photographer'
+          title: 'Photographer',
+          profile_picture: 'http://example.com/profile1.jpg',
         },
         {
           name: 'Jane Doe',
           email: 'jane.doe@example.com',
           password: '$2a$10$6tDQIhKYYcQQtPvQAdtqMOS7m3tvGj3tJ5.bPErX4iMDacwseYBAS', // password123 (bcrypt 10 rounds)
           biography: 'Some bio',
-          title: 'Photographer'
+          title: 'Photographer',
+          profile_picture: 'http://example.com/profile2.jpg',
         }
       ])
 
@@ -38,16 +40,22 @@ module.exports = {
           id_user: 1,
           id_category: 1,
           photo_url: 'http://example.com/photo1.jpg',
+          title: 'Nature Photo 1',
+          description: 'A beautiful nature scene.'
         },
         {
           id_user: 1,
           id_category: 2,
           photo_url: 'http://example.com/photo2.jpg',
+          title: 'Tech Photo 1',
+          description: 'A stunning piece of technology.'
         },
         {
           id_user: 2,
           id_category: 1,
           photo_url: 'http://example.com/photo3.jpg',
+          title: 'Nature Photo 2',
+          description: 'Another amazing nature scene.'
         }
       ]);
 

@@ -40,7 +40,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     biography: DataTypes.TEXT,
-    title: DataTypes.STRING
+    title: DataTypes.STRING,
+    profile_picture: { // Added this field
+      type: DataTypes.STRING,
+      allowNull: true
+    },
   }, {
     sequelize,
     modelName: 'User',
