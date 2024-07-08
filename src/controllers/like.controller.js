@@ -129,11 +129,11 @@ const removeLikeByPhotoID = async (req, res, next) => {
   })
 
   if (!deletedLike) {
-    return res.status(500).send({ message: "Error unable to delete comment" })
+    return res.status(500).send({ message: "Error unable to remove like" })
   }
 
   return res.status(200).send({
-    message: "Comment removed",
+    message: "Like removed",
     data: {
       id_photo: likeFind.id_photo,
       id_user: likeFind.id_user
