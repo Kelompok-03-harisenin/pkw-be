@@ -72,7 +72,7 @@ const addCommentsToPhoto = async (req, res, next) => {
   })
 
   if (!commentCreate) {
-    return res.status(401).send({ message: "Comment creation failed" })
+    return res.status(500).send({ message: "Comment creation failed" })
   }
 
   return res.status(201).send({
