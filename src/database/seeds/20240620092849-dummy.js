@@ -30,7 +30,22 @@ module.exports = {
           category_name: 'Nature',
         },
         {
-          category_name: 'Technology',
+          category_name: 'Wallpaper',
+        },
+        {
+          category_name: 'Fashion'
+        },
+        {
+          category_name: 'Street Photography'
+        },
+        {
+          category_name: 'Travel'
+        },
+        {
+          category_name: 'People'
+        },
+        {
+          category_name: 'etc'
         }
       ])
 
