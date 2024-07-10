@@ -72,6 +72,7 @@ const updateUserByID = async (req, res, _next) => {
       password: passwordHashed || userFind.password,
       biography: biography || userFind.biography,
       title: title || userFind.title,
+      profile_picture: req.file?.path || userFind.profile_picture
     },
     {
       where: { id: id }
