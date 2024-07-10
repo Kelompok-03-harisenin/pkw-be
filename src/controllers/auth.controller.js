@@ -24,7 +24,7 @@ const register = async (req, res, next) => {
     password: passwordhashed,
     biography: "",
     title: "",
-    profile_picture: ""
+    profile_picture: "https://res.cloudinary.com/de3qj7pyl/image/upload/v1720609286/default-profile-picture_qrzxus.png"
 
   })
   if (!user) {
