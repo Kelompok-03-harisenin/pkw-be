@@ -7,7 +7,7 @@ const photoPreview = async (req, res, next) => {
 
   const photoFind = await PhotoModel.findOne({
     where: { id: photoIDNum },
-    attributes: ["id", "photo_url"],
+    attributes: ["id", "photo_url", "title", "description"],
     include: [
       {
         model: UserModel,
