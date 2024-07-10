@@ -12,7 +12,7 @@ const upload = multer({ storage });
 
 router.get("/:photoID", photoPreview);
 router.post('', upload.single("image"), verifyToken, uploadPhoto);
-router.post('/:photoId', upload.single("image"), verifyToken, editPhoto);
+router.patch('/:photoId', upload.single("image"), verifyToken, editPhoto);
 router.delete('/:photoId', verifyToken, deletePhoto);
 
 module.exports = router
