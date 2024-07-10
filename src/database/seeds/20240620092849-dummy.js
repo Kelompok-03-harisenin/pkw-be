@@ -21,6 +21,14 @@ module.exports = {
         biography: 'Some bio',
         title: 'Photographer',
         profile_picture: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1720609286/default-profile-picture_qrzxus.png',
+      },
+      {
+        name: 'John Smith',
+        email: 'johnSmith@example.com',
+        password: '$2a$10$6tDQIhKYYcQQtPvQAdtqMOS7m3tvGj3tJ5.bPErX4iMDacwseYBAS', // password123 (bcrypt 10 rounds)
+        biography: 'Some bio',
+        title: 'Photographer',
+        profile_picture: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1720609286/default-profile-picture_qrzxus.png',
       }
     ])
 
@@ -30,7 +38,22 @@ module.exports = {
         category_name: 'Nature',
       },
       {
-        category_name: 'Technology',
+        category_name: 'Wallpaper',
+      },
+      {
+        category_name: 'Fashion',
+      },
+      {
+        category_name: 'Street Photography',
+      },
+      {
+        category_name: 'Travel',
+      },
+      {
+        category_name: 'People',
+      },
+      {
+        category_name: 'Etc',
       }
     ])
 
