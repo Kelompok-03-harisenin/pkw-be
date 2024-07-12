@@ -11,7 +11,7 @@ const photoPreview = async (req, res, next) => {
     include: [
       {
         model: UserModel,
-        attributes: ["id", "name"],
+        attributes: ["id", "name", "profile_picture", "title"],
         as: "user"
       },
       {
@@ -22,14 +22,7 @@ const photoPreview = async (req, res, next) => {
       {
         model: LikeModel,
         attributes: ["id", "id_user"],
-        as: "likes",
-        include: [
-          {
-            model: UserModel,
-            attributes: ["name"],
-            as: "user"
-          }
-        ]
+        as: "likes"
       },
       {
         model: CommentModel,
@@ -38,7 +31,7 @@ const photoPreview = async (req, res, next) => {
         include: [
           {
             model: UserModel,
-            attributes: ["name"],
+            attributes: ["name", "profile_picture", "title"],
             as: "user"
           }
         ]
@@ -54,7 +47,29 @@ const photoPreview = async (req, res, next) => {
 
   return res.status(200).send({
     message: "Photo found",
-    data: photoFind
+    data: {
+      id: photoFind.id,
+      photo_url: photoFind.photo_url,
+      title: photoFind.title,
+      description: photoFind.description,
+      userID: photoFind.user.id,
+      userName: photoFind.user.name,
+      userProfilePicture: photoFind.user.profile_picture,
+      userTitle: photoFind.user.title,
+      categoryID: photoFind.category.id,
+      categoryName: photoFind.category.category_name,
+      likesCount: photoFind.likes.length,
+      likes: photoFind.likes,
+      commentsCount: photoFind.comments.length,
+      comments: photoFind.comments.map((comment) => ({
+        id: comment.id,
+        userID: comment.id_user,
+        userName: comment.user.name,
+        userProfilePicture: comment.user.profile_picture,
+        userTitle: comment.user.title,
+        comment: comment.comment,
+      }))
+    }
   })
 }
 
