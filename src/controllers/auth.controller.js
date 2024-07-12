@@ -18,18 +18,23 @@ const register = async (req, res, next) => {
 
   const passwordhashed = await bcrypt.hash(password, 10);
 
-  const user = await UserModel.create({
-    name,
-    email,
-    password: passwordhashed,
-    biography: "",
-    title: "",
-    profile_picture: "https://res.cloudinary.com/de3qj7pyl/image/upload/v1720609286/default-profile-picture_qrzxus.png"
-
-  })
-  if (!user) {
+  try {
+    const user = await UserModel.create({
+      name,
+      email,
+      password: passwordhashed,
+      biography: "",
+      title: "",
+      profile_picture: "https://res.cloudinary.com/de3qj7pyl/image/upload/v1720609286/default-profile-picture_qrzxus.png"
+  
+    })
+    if (!user) {
+      return res.status(401).send({ message: "Registration failed" })
+    }
+  } catch (err) {
     return res.status(401).send({ message: "Registration failed" })
   }
+
 
   return res.status(201).send({
     message: "Register successful",
@@ -59,7 +64,8 @@ const login = async (req, res, next) => {
 
   const data = {
     id: user.id,
-    name: user.name
+    name: user.name,
+    profile_picture: user.profile_picture
   }
 
   const token = jwt.sign(data, process.env.JWT_SECRET)

@@ -36,6 +36,40 @@ const getUserById = async (req, res, _next) => {
 };
 
 /**
+ * Get user profile by ID
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ */
+const getUserByToken = async (req, res, _next) => {
+  const id = req.user.id;
+
+  try {
+    const user = await UserModel.findByPk(id, {
+      attributes: { exclude: ['password', 'createdAt', 'updatedAt'] },
+    });
+
+    if (!user) {
+      return res.status(404).send({
+        message: "User not found",
+        data: null,
+      });
+    }
+
+    return res.send({
+      message: "Success",
+      data: user,
+    });
+  } catch (error) {
+    console.error("Error fetching user profile by ID:", error);
+    return res.status(500).send({
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+};
+
+/**
  * @param {import("express").Request} req
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
@@ -95,5 +129,6 @@ const updateUserByID = async (req, res, _next) => {
 
 module.exports = {
   getUserById,
-  updateUserByID
+  updateUserByID,
+  getUserByToken
 };
