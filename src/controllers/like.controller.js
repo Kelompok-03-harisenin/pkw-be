@@ -5,6 +5,63 @@ const { Photo: PhotoModel, Like: likeModel, User: userModel } = require("../mode
  * @param {import("express").Response} res
  * @param {import("express").NextFunction} next
  */
+const checkLikeByPhotoIDAndToken = async (req, res, next) => {
+  const photoID = req.params.photoID
+  const user = req.user
+  const photoIDNum = Number(photoID)
+
+  const photoFind = await PhotoModel.findOne({
+    where: { id: photoIDNum },
+  })
+
+  if (!photoFind) {
+    return res.status(404).send({
+      message: "Error Photo not found"
+    })
+  }
+
+  const userFind = await userModel.findOne({
+    where: { id: user.id }
+  })
+
+  if (!userFind) {
+    return res.status(404).send({
+      message: "Error User not found"
+    })
+  }
+
+  const likeFind = await likeModel.findAll({
+    where: {
+      id_photo: photoIDNum,
+      id_user: user.id
+    },
+    attributes: ["id", "id_user", "id_photo"],
+  })
+
+  if (likeFind.length == 0) {
+    return res.status(200).send({
+      message: "Like not found",
+      data: {
+        status: false
+      }
+    })
+  }
+
+  return res.status(200).send({
+    message: "Like found",
+    data: {
+      id: likeFind.id,
+      id_user: likeFind.id_user,
+      id_photo: likeFind.id_photo,
+      status: true
+    }
+  })
+}
+/**
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ */
 const getLikesByPhotoID = async (req, res, next) => {
   const photoID = req.params.photoID
   const photoIDNum = Number(photoID)
@@ -141,4 +198,4 @@ const removeLikeByPhotoID = async (req, res, next) => {
   })
 }
 
-module.exports = { getLikesByPhotoID, addLikeByPhotoID, removeLikeByPhotoID }
+module.exports = { getLikesByPhotoID, addLikeByPhotoID, removeLikeByPhotoID, checkLikeByPhotoIDAndToken }

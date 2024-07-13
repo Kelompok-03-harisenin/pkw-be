@@ -25,7 +25,7 @@ const getCommentsByPhoto = async (req, res, next) => {
     include: [
       {
         model: userModel,
-        attributes: ["id", "name"],
+        attributes: ["id", "name", "title", "profile_picture"],
         as: "user"
       }
     ]
@@ -34,7 +34,17 @@ const getCommentsByPhoto = async (req, res, next) => {
 
   return res.status(200).send({
     message: "Photo found",
-    data: commentFind
+    data: commentFind.map(item => (
+      {
+        id: item.id,
+        photoID: item.id_photo,
+        userID: item.id_user,
+        comment: item.comment,
+        userName: item.user.name,
+        userTitle: item.user.title,
+        userPicture: item.user.profile_picture
+      }
+    ))
   })
 }
 
