@@ -99,6 +99,7 @@ const updateUserByID = async (req, res, _next) => {
     passwordHashed = bcrypt.hash(password, 10)
   }
 
+  console.log(req.file)
   const updatedUser = await UserModel.update(
     {
       name: name || userFind.name,
@@ -106,7 +107,7 @@ const updateUserByID = async (req, res, _next) => {
       password: passwordHashed || userFind.password,
       biography: biography || userFind.biography,
       title: title || userFind.title,
-      profile_picture: req.file?.path || userFind.profile_picture
+      profile_picture: req.img || userFind.profile_picture
     },
     {
       where: { id: id }
