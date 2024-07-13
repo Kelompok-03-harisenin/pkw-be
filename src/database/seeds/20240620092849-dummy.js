@@ -107,7 +107,71 @@ module.exports = {
         photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540257/samples/animals/cat.jpg',
         title: 'Cat',
         description: 'Meow'
+      },
+      {
+        id_user: 2,
+        id_category: 6,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540284/samples/man-portrait.jpg',
+        title: 'My selfie',
+        description: 'Im the most handsome man in the world'
+      },
+      {
+        id_user: 3,
+        id_category: 1,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540268/samples/landscapes/nature-mountains.jpg',
+        title: 'The forest',
+        description: 'Its like the videogame!'
+      },
+      {
+        id_user: 2,
+        id_category: 4,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540263/samples/landscapes/architecture-signs.jpg',
+        title: 'Im famous!',
+        description: 'Look ma im in broadway!'
+      },
+      {
+        id_user: 3,
+        id_category: 3,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540257/samples/ecommerce/analog-classic.jpg',
+        title: 'La vior',
+        description: 'the greatest watch you will ever lay your hands on'
+      },
+      {
+        id_user: 1,
+        id_category: 2,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540264/samples/landscapes/beach-boat.jpg',
+        title: 'da beach',
+        description: 'amazing wallpapaer'
+      },
+      {
+        id_user: 2,
+        id_category: 3,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540283/samples/outdoor-woman.jpg',
+        title: 'women clothing',
+        description: 'women'
+      },
+      {
+        id_user: 3,
+        id_category: 5,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540265/samples/ecommerce/car-interior-design.jpg',
+        title: 'travel car',
+        description: 'this car is awesome!'
+      },
+      {
+        id_user: 1,
+        id_category: 2,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540269/samples/landscapes/landscape-panorama.jpg',
+        title: 'BIG wallpaper',
+        description: 'MASSIVE GIANT WOOO'
+      },
+      {
+        id_user: 2,
+        id_category: 7,
+        photo_url: 'https://res.cloudinary.com/de3qj7pyl/image/upload/v1718540285/samples/chair-and-coffee-table.jpg',
+        title: 'cactus',
+        description: 'meep'
       }
+      
     ]);
 
     // Seed Comments
