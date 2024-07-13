@@ -3,7 +3,6 @@ const { Photo: PhotoModel, User: UserModel, Category: CategoryModel, Like: LikeM
 const photoPreview = async (req, res, next) => {
   const photoID = req.params.photoID
   const photoIDNum = Number(photoID)
-  console.log(req.user)
 
   const photoFind = await PhotoModel.findOne({
     where: { id: photoIDNum },
@@ -72,5 +71,6 @@ const photoPreview = async (req, res, next) => {
     }
   })
 }
+
 
 module.exports = { photoPreview }

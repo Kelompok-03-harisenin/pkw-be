@@ -1,4 +1,4 @@
-const { User: UserModel } = require('../models');
+const { User: UserModel, Photo: PhotoModel } = require('../models');
 const bcrypt = require("bcryptjs");
 
 /**
@@ -99,7 +99,6 @@ const updateUserByID = async (req, res, _next) => {
     passwordHashed = bcrypt.hash(password, 10)
   }
 
-  console.log(req.file)
   const updatedUser = await UserModel.update(
     {
       name: name || userFind.name,
@@ -128,8 +127,46 @@ const updateUserByID = async (req, res, _next) => {
   })
 }
 
+/**
+ * Get photos by user id
+ * @param {import("express").Request} req
+ * @param {import("express").Response} res
+ * @param {import("express").NextFunction} next
+ */
+const getPhotosByUserId = async (req, res, next) => {
+  const { id } = req.params
+
+  const userFind = await UserModel.findByPk(id);
+
+  if (!userFind) {
+    return res.status(404).send({
+      message: "User not found",
+      data: null,
+    });
+  }
+
+
+  const photosFind = await PhotoModel.findAll({
+    where: { id_user: id },
+    attributes: ["id", "id_user", "id_category", "photo_url", "title", "description"]
+  })
+
+  if (!photosFind) {
+    return res.status(404).send({
+      message: "Photos not found",
+      data: null,
+    });
+  }
+
+  return res.status(200).send({
+    message: "User updated",
+    data: photosFind
+  })
+}
+
 module.exports = {
   getUserById,
   updateUserByID,
-  getUserByToken
+  getUserByToken,
+  getPhotosByUserId
 };
